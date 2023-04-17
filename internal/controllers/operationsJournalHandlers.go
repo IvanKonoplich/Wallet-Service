@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"avitoTest/internal/entities"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -16,8 +15,7 @@ func (co *Controller) getOperationsListByAmount(c *gin.Context) {
 	if err != nil {
 		NewResponseMessage(c, http.StatusInternalServerError, err.Error())
 	}
-	resultString := fmt.Sprint(result)
-	c.JSON(http.StatusOK, Response{resultString})
+	c.JSON(http.StatusOK, Response{result})
 }
 func (co *Controller) getOperationsListByDate(c *gin.Context) {
 	var input entities.User
@@ -28,6 +26,5 @@ func (co *Controller) getOperationsListByDate(c *gin.Context) {
 	if err != nil {
 		NewResponseMessage(c, http.StatusInternalServerError, err.Error())
 	}
-	resultString := fmt.Sprint(result)
-	c.JSON(http.StatusOK, Response{resultString})
+	c.JSON(http.StatusOK, Response{result})
 }

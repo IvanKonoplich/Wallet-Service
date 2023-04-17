@@ -24,7 +24,7 @@ func (tm *TransactionMaker) CreateUser(user entities.User) error {
 		UserID:  user.ID,
 		Amount:  user.Balance,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("Account with ID:%d was created, balance:%f. Date:%s", user.ID, user.Balance, time.Now().String()),
+		Message: fmt.Sprintf("Account with ID:%d was created, balance:%f. Date:%s", user.ID, user.Balance, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	err = tm.repos.UpdateOperationsJournal(tx, journalUpdate)
 	if err != nil {
@@ -57,7 +57,7 @@ func (tm *TransactionMaker) BalanceIncrease(user entities.User) error {
 		UserID:  user.ID,
 		Amount:  user.Balance,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("Account:%d balance was increased on:%f. Now it is:%f. Date:%s", user.ID, user.Balance, relevantBalance, time.Now().String()),
+		Message: fmt.Sprintf("Account:%d balance was increased on:%f. Now it is:%f. Date:%s", user.ID, user.Balance, relevantBalance, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	err = tm.repos.UpdateOperationsJournal(tx, journalUpdate)
 	if err != nil {
@@ -111,13 +111,13 @@ func (tm *TransactionMaker) TransferOfFunds(transfer entities.Transfer, mustChec
 		UserID:  transfer.SenderID,
 		Amount:  transfer.Amount,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("Account:%d balance was decreased on:%f, becouse of transfer to user:%d .Now it is:%f. Date:%s", transfer.SenderID, transfer.Amount, transfer.RecipientID, relevantSenderBalance, time.Now().String()),
+		Message: fmt.Sprintf("Account:%d balance was decreased on:%f, becouse of transfer to user:%d .Now it is:%f. Date:%s", transfer.SenderID, transfer.Amount, transfer.RecipientID, relevantSenderBalance, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	journalUpdateRecipient := entities.OperationsJournalRow{
 		UserID:  transfer.RecipientID,
 		Amount:  transfer.Amount,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("Account:%d balance was increased on:%f, becouse of transfer from user:%d .Now it is:%f. Date:%s", transfer.RecipientID, transfer.Amount, transfer.SenderID, relevantRecipientBalance, time.Now().String()),
+		Message: fmt.Sprintf("Account:%d balance was increased on:%f, becouse of transfer from user:%d .Now it is:%f. Date:%s", transfer.RecipientID, transfer.Amount, transfer.SenderID, relevantRecipientBalance, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	err = tm.repos.UpdateOperationsJournal(tx, journalUpdateSender)
 	if err != nil {

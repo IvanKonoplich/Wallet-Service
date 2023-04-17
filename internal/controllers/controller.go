@@ -19,8 +19,8 @@ type reportOperation interface {
 }
 
 type operationsJournal interface {
-	GetOperationsListByAmount(user entities.User) ([]entities.OperationsJournalRow, error)
-	GetOperationsListByDate(user entities.User) ([]entities.OperationsJournalRow, error)
+	GetOperationsListByAmount(user entities.User) (string, error)
+	GetOperationsListByDate(user entities.User) (string, error)
 }
 
 type useCase interface {

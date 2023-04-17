@@ -41,7 +41,7 @@ func (tm *TransactionMaker) ReserveFunds(order entities.Order) error {
 		UserID:  order.UserID,
 		Amount:  order.Price,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("account:%d funds were reserved for order:%d. Amount:%f. Product:%d. Date:%s", order.UserID, order.OrderID, order.Price, order.ProductID, time.Now().String()),
+		Message: fmt.Sprintf("account:%d funds were reserved for order:%d. Amount:%f. Product:%d. Date:%s", order.UserID, order.OrderID, order.Price, order.ProductID, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	err = tm.repos.UpdateOperationsJournal(tx, journalUpdate)
 	if err != nil {
@@ -77,7 +77,7 @@ func (tm *TransactionMaker) RevenueApproval(order entities.Order) error {
 		UserID:  order.UserID,
 		Amount:  order.Price,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("account:%d order:%d funds approved. Amount:%f. Product:%d. Date:%s", order.UserID, order.OrderID, order.Price, order.ProductID, time.Now().String()),
+		Message: fmt.Sprintf("account:%d order:%d funds approved. Amount:%f. Product:%d. Date:%s", order.UserID, order.OrderID, order.Price, order.ProductID, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	err = tm.repos.UpdateOperationsJournal(tx, journalUpdate)
 	if err != nil {
@@ -112,7 +112,7 @@ func (tm *TransactionMaker) RevenueDeny(order entities.Order) error {
 		UserID:  order.UserID,
 		Amount:  order.Price,
 		Date:    time.Now(),
-		Message: fmt.Sprintf("account:%d order:%d funds denyed. Amount:%f. Product:%d. Date:%s", order.UserID, order.OrderID, order.Price, order.ProductID, time.Now().String()),
+		Message: fmt.Sprintf("account:%d order:%d funds denyed. Amount:%f. Product:%d. Date:%s", order.UserID, order.OrderID, order.Price, order.ProductID, fmt.Sprint(time.Now().Date())+""+fmt.Sprint(time.Now().Clock())),
 	}
 	err = tm.repos.UpdateOperationsJournal(tx, journalUpdate)
 	if err != nil {
