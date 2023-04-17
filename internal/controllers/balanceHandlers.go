@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
-func (co *Controller) test(c *gin.Context) {
-	fmt.Print("its working here")
-}
 func (co *Controller) balanceIncrease(c *gin.Context) {
 	var input entities.User
 	if err := c.BindJSON(&input); err != nil {
@@ -35,9 +33,7 @@ func (co *Controller) transferOfFunds(c *gin.Context) {
 
 func (co *Controller) getBalance(c *gin.Context) {
 	var input entities.User
-	if err := c.BindJSON(&input); err != nil {
-		NewResponseMessage(c, http.StatusBadRequest, err.Error())
-	}
+	input.ID, _ = strconv.Atoi(c.Param("id"))
 	balance, err := co.uc.GetBalance(input)
 	if err != nil {
 		NewResponseMessage(c, http.StatusInternalServerError, err.Error())

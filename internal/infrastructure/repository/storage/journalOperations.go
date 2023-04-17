@@ -12,8 +12,8 @@ func (s *Storage) UpdateOperationsJournal(tx *sqlx.Tx, row entities.OperationsJo
 }
 func (s *Storage) GetOperationsListByAmount(user entities.User) ([]entities.OperationsJournalRow, error) {
 	var result []entities.OperationsJournalRow
-	query := "SELECT * FROM operations_journal order by amount"
-	rows, err := s.db.Queryx(query)
+	query := "SELECT * FROM operations_journal WHERE user_id=$1 order by amount"
+	rows, err := s.db.Queryx(query, user.ID)
 	for rows.Next() {
 		var row entities.OperationsJournalRow
 		err = rows.StructScan(&row)
@@ -26,8 +26,8 @@ func (s *Storage) GetOperationsListByAmount(user entities.User) ([]entities.Oper
 }
 func (s *Storage) GetOperationsListByDate(user entities.User) ([]entities.OperationsJournalRow, error) {
 	var result []entities.OperationsJournalRow
-	query := "SELECT * FROM operations_journal order by date"
-	rows, err := s.db.Queryx(query)
+	query := "SELECT * FROM operations_journal WHERE user_id=$1 order by date"
+	rows, err := s.db.Queryx(query, user.ID)
 	for rows.Next() {
 		var row entities.OperationsJournalRow
 		err = rows.StructScan(&row)

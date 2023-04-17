@@ -7,7 +7,7 @@ import (
 
 func (s *Storage) CheckOrder(order entities.Order) (bool, error) {
 	var result bool
-	query := "SELECT exists(SELECT order_id FROM orders WHERE id=$1)"
+	query := "SELECT exists(SELECT order_id FROM orders WHERE order_id=$1)"
 	row := s.db.QueryRow(query, order.OrderID)
 	if err := row.Scan(&result); err != nil {
 		return false, err
@@ -17,10 +17,7 @@ func (s *Storage) CheckOrder(order entities.Order) (bool, error) {
 func (s *Storage) GetOrder(order entities.Order) (entities.Order, error) {
 	var orderResult entities.Order
 	query := "SELECT * FROM orders WHERE order_id=$1"
-	rows, err := s.db.Queryx(query, order.OrderID)
-	if err != nil {
-		return entities.Order{}, err
-	}
+	rows := s.db.QueryRowx(query, order.OrderID)
 	if err := rows.StructScan(&orderResult); err != nil {
 		return entities.Order{}, err
 	}

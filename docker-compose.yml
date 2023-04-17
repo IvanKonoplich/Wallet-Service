@@ -3,6 +3,7 @@ version: '3.8'
 services:
   avito_test:
     build: ./
+    command: ./wait-for-postgres.sh db ./avitoTest
     ports:
       - "8000:8000"
     depends_on:
@@ -14,10 +15,10 @@ services:
     restart: always
     image: postgres:latest
     volumes:
-      - pgdbdate:/var/lib/postgresql/data
+      - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=qwerty
     ports:
       - "5436:5432"
 volumes:
-  pgdbdate:
+  pgdbdata:

@@ -11,7 +11,7 @@ import (
 
 func (s *Storage) GetMonthReport(month string) (string, error) {
 
-	query := "SELECT SUM(balance) FROM report WHERE mounth=$1 GROUP BY product_id"
+	query := "SELECT sum(balance) FROM report WHERE month=$1 GROUP BY product_id"
 	rows, err := s.db.Queryx(query, month)
 
 	file, err := os.Create("report:" + time.Now().String() + fmt.Sprintf("-month:%s", month) + ".csv")
@@ -31,7 +31,7 @@ func (s *Storage) GetMonthReport(month string) (string, error) {
 	return file.Name(), err
 }
 func (s *Storage) UpdateMonthReport(tx *sqlx.Tx, order entities.Order, month string) error {
-	query := "INSERT INTO report (product_id, balance, mounth) values ($1, $2, $3)"
+	query := "INSERT INTO report (product_id, balance, month) values ($1, $2, $3)"
 	_, err := tx.Exec(query, order.ProductID, order.Price, month)
 	return err
 }

@@ -100,11 +100,13 @@ func (tm *TransactionMaker) TransferOfFunds(transfer entities.Transfer, mustChec
 		tx.Rollback()
 		return err
 	}
+	relevantSenderBalance -= transfer.Amount
 	relevantRecipientBalance, err := tm.GetBalance(transfer.RecipientID)
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
+	relevantRecipientBalance += transfer.Amount
 	journalUpdateSender := entities.OperationsJournalRow{
 		UserID:  transfer.SenderID,
 		Amount:  transfer.Amount,
